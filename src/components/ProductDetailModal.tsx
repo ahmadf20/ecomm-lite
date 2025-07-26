@@ -1,6 +1,7 @@
 "use client";
 
 import { useProduct } from "@/modules/product/hooks";
+import { Product } from "@/modules/product/models";
 import {
   Dialog,
   DialogTitle,
@@ -9,20 +10,23 @@ import {
   Button,
   Typography,
   Box,
+  TextField,
 } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 type ProductDetailModalProps = {
   productId: number;
   open: boolean;
   onClose: () => void;
+  onAddToCart?: (product: Product, quantity: number) => void;
 };
 
 export const ProductDetailModal = ({
   productId,
   open,
   onClose,
+  onAddToCart,
 }: ProductDetailModalProps) => {
   const { data: product, isLoading: isLoadingProduct } = useProduct(productId, {
     enabled: Boolean(productId) && open,
@@ -63,6 +67,12 @@ export const ProductDetailModal = ({
                 Category: {product?.category}
               </Typography>
             </Box>
+
+            {onAddToCart && product && (
+              <ProductQuantity
+                onAddToCart={(quantity) => onAddToCart(product, quantity)}
+              />
+            )}
           </>
         )}
       </DialogContent>
@@ -72,3 +82,34 @@ export const ProductDetailModal = ({
     </Dialog>
   );
 };
+
+function ProductQuantity({
+  onAddToCart,
+}: {
+  onAddToCart: (quantity: number) => void;
+}) {
+  const [quantity, setQuantity] = useState(1);
+
+  return (
+    <Box sx={{ display: "flex", gap: 2 }}>
+      <TextField
+        type="number"
+        size="small"
+        value={quantity}
+        onClick={(e) => e.stopPropagation()}
+        onChange={(e) => {
+          const value = Number(e.target.value);
+          if (value > 0) setQuantity(value);
+        }}
+        sx={{ width: 75 }}
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => onAddToCart(quantity)}
+      >
+        Add
+      </Button>
+    </Box>
+  );
+}

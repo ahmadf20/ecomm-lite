@@ -1,6 +1,8 @@
 export type CartsResponse = Cart[] | undefined;
 export type CartResponse = Cart | undefined;
 
+export type AddCartRequest = Cart;
+
 export type Cart = {
   id?: number;
   userId?: number;

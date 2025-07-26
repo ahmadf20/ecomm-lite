@@ -6,14 +6,18 @@ export async function middleware(req: NextRequest) {
 
   const isLogin = req.nextUrl.pathname === "/login";
 
+  // Ideally the token should be validated from the API
   const token = cookieStore.get("token")?.value;
+  const isAuthenticated = Boolean(token);
 
-  if (isLogin && token) {
+  if (isLogin && isAuthenticated) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (!isLogin && !token) {
-    return NextResponse.redirect(new URL("/login", req.url));
+  if (!isLogin && !isAuthenticated) {
+    return NextResponse.redirect(
+      new URL("/login?redirect=" + req.url, req.url)
+    );
   }
 
   return NextResponse.next();

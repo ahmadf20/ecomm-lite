@@ -1,10 +1,11 @@
 "use client";
 
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useLogout } from "@/modules/auth/hooks";
 import { useSnackbar } from "./Snackbar";
 import Link from "next/link";
+import { Logout, ShoppingBag } from "@mui/icons-material";
 
 export const Navbar = () => {
   const router = useRouter();
@@ -24,7 +25,16 @@ export const Navbar = () => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1,
+      }}
+    >
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -33,23 +43,24 @@ export const Navbar = () => {
               display="flex"
               gap={2}
             >
-              <Typography variant="h6" component="div">
-                EComm Lite
-              </Typography>
-
-              <Button color="inherit">
-                <Link href="/cart">Cart</Link>
-              </Button>
+              <Link href="/">EComm Lite</Link>
             </Box>
 
-            <Button
+            <Link href="/cart">
+              <IconButton color="inherit" sx={{ ml: 2 }}>
+                <ShoppingBag />
+              </IconButton>
+            </Link>
+
+            {/* TODO: should only be visible when logged in */}
+            <IconButton
               color="inherit"
-              variant="outlined"
               onClick={handleLogout}
               disabled={isPending}
+              sx={{ ml: 2 }}
             >
-              Logout
-            </Button>
+              <Logout />
+            </IconButton>
           </Toolbar>
         </AppBar>
       </Box>

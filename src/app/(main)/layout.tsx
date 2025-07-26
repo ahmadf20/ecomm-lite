@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar";
+import { Box } from "@mui/material";
 
 export default function MainLayout({
   children,
@@ -8,7 +9,9 @@ export default function MainLayout({
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main>
+        <Box sx={{ mt: 12 }}>{children}</Box>
+      </main>
     </div>
   );
 }

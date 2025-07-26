@@ -15,9 +15,7 @@ import React, { useState } from "react";
 import { useUser } from "@/modules/user/hooks";
 import { useCart } from "@/modules/cart/hooks";
 import { useProductsByIds } from "@/modules/product/hooks";
-import { Product } from "@/modules/product/models";
-import Image from "next/image";
-import { ProductDetailModal } from "@/components/ProductDetailModal";
+import { ProductCard } from "@/components/ProductCard";
 
 type CartDetailProps = {
   cartId: number;
@@ -117,50 +115,3 @@ export const CartDetail = ({ cartId }: CartDetailProps) => {
     </>
   );
 };
-
-function ProductCard({ product }: { product: Product }) {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: 3,
-          cursor: "pointer",
-        }}
-        onClick={handleOpen}
-      >
-        <Image
-          src={product.image || ""}
-          alt={product.title || ""}
-          width={75}
-          height={75}
-          style={{ objectFit: "contain" }}
-        />
-
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="body1">{product.title}</Typography>
-          <Typography variant="body1" fontWeight="bold">
-            {product.price}
-          </Typography>
-        </Box>
-      </Box>
-
-      <ProductDetailModal
-        productId={product.id || 0}
-        open={open}
-        onClose={handleClose}
-      />
-    </>
-  );
-}

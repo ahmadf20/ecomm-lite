@@ -16,7 +16,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useLogin } from "@/modules/auth/hooks";
 import { useSnackbar } from "@/components/Snackbar";
 
@@ -32,6 +32,8 @@ export const LoginContainer = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+
   const { mutateAsync: login } = useLogin();
   const { showSnackbar } = useSnackbar();
 
@@ -46,7 +48,7 @@ export const LoginContainer = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       await login(data);
-      router.push("/");
+      router.push(searchParams.get("redirect") || "/");
       showSnackbar("Login successful");
     } catch (err) {
       setError(

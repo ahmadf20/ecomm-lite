@@ -12,16 +12,21 @@ import {
   TablePagination,
   Box,
   Button,
+  Fab,
 } from "@mui/material";
 import { useCarts } from "@/modules/cart/hooks";
 import { useState } from "react";
 import { CartDetail } from "./components/CartDetailModal";
 import { DatePicker } from "@mui/x-date-pickers";
 import { PickerValue } from "@mui/x-date-pickers/internals";
+import { useRouter } from "next/navigation";
+import { Add } from "@mui/icons-material";
 
 const PER_PAGE = 5;
 
 export const CartContainer = () => {
+  const router = useRouter();
+
   const { data, isLoading } = useCarts();
 
   const [page, setPage] = useState(0);
@@ -41,12 +46,21 @@ export const CartContainer = () => {
   };
 
   return (
-    <Container sx={{ my: 4 }}>
+    <Container sx={{ my: 4, pb: 12 }}>
+      <Fab
+        color="primary"
+        aria-label="add"
+        onClick={() => router.push("/cart/add")}
+        sx={{ mb: 2, position: "fixed", right: 24, bottom: 24 }}
+      >
+        <Add />
+      </Fab>
+
       <Typography variant="h4" fontWeight="bold" sx={{ mb: 4 }}>
         Carts
       </Typography>
 
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
         <DatePicker
           label="Start Date"
           value={startDate}
@@ -63,15 +77,6 @@ export const CartContainer = () => {
         />
         <Button onClick={handleClearFilter}>Clear</Button>
       </Box>
-
-      <TablePagination
-        rowsPerPageOptions={[PER_PAGE]}
-        component="div"
-        count={filteredData?.length || 0}
-        rowsPerPage={PER_PAGE}
-        page={page}
-        onPageChange={(event, newPage) => setPage(newPage)}
-      />
 
       <TableContainer>
         <Table>
@@ -97,6 +102,11 @@ export const CartContainer = () => {
           <TableBody>
             {filteredData
               ?.slice(page * PER_PAGE, (page + 1) * PER_PAGE)
+              ?.sort(
+                (a, b) =>
+                  new Date(b.date || "").getTime() -
+                  new Date(a.date || "").getTime()
+              )
               .map((cart) => (
                 <TableRow key={cart.id}>
                   <TableCell>{cart.userId}</TableCell>
@@ -115,6 +125,15 @@ export const CartContainer = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <TablePagination
+        rowsPerPageOptions={[PER_PAGE]}
+        component="div"
+        count={filteredData?.length || 0}
+        rowsPerPage={PER_PAGE}
+        page={page}
+        onPageChange={(event, newPage) => setPage(newPage)}
+      />
     </Container>
   );
 };
