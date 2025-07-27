@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 import { useLogout } from "@/modules/auth/hooks";
 import { useSnackbar } from "./Snackbar";
 import Link from "next/link";
-import { Logout, ShoppingBag } from "@mui/icons-material";
+import { useIsAuth } from "@/modules/auth/hooks";
+import { ShoppingBag } from "@mui/icons-material";
 
 export const Navbar = () => {
   const router = useRouter();
-
   const { showSnackbar } = useSnackbar();
 
+  const { data: auth } = useIsAuth();
   const { mutate: logout, isPending } = useLogout({
     onSuccess: () => {
       router.push("/login");
@@ -52,15 +53,19 @@ export const Navbar = () => {
               </IconButton>
             </Link>
 
-            {/* TODO: should only be visible when logged in */}
-            <IconButton
-              color="inherit"
-              onClick={handleLogout}
-              disabled={isPending}
-              sx={{ ml: 2 }}
-            >
-              <Logout />
-            </IconButton>
+            {auth?.isAuth ? (
+              <Button
+                color="inherit"
+                onClick={handleLogout}
+                disabled={isPending}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Link href="/login">
+                <Button color="inherit">Login</Button>
+              </Link>
+            )}
           </Toolbar>
         </AppBar>
       </Box>

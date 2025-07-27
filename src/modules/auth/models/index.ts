@@ -6,3 +6,7 @@ export type LoginRequest = {
 export type LoginResponse = {
   token?: string;
 };
+
+export type IsAuthResponse = {
+  isAuth: boolean;
+};

@@ -57,7 +57,10 @@ export const AddCartContainer = () => {
 
     addCart({
       userId: selectedUser?.id,
-      products: cartProducts,
+      products: cartProducts?.map((product) => ({
+        productId: product.product.id,
+        quantity: product.quantity,
+      })),
     });
   };
 

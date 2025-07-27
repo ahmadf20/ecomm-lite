@@ -100,6 +100,7 @@ export const CartContainer = () => {
           )}
 
           <TableBody>
+            {/* Ideally sort & filter should be done from the BE */}
             {filteredData
               ?.slice(page * PER_PAGE, (page + 1) * PER_PAGE)
               ?.sort(

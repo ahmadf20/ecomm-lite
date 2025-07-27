@@ -58,97 +58,97 @@ export const LoginContainer = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "100vh",
+        justifyContent: "center",
+      }}
+    >
+      <Paper
+        elevation={3}
         sx={{
-          marginTop: 8,
+          padding: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          borderRadius: 2,
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Paper
-          elevation={3}
-          sx={{
-            padding: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "100%",
-            borderRadius: 2,
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-          }}
+        <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
+          Sign In
+        </Typography>
+
+        {error && (
+          <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ mt: 1, width: "100%" }}
+          noValidate
         >
-          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
-            Sign In
-          </Typography>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            autoComplete="username"
+            autoFocus
+            {...register("username")}
+            error={!!errors.username}
+            helperText={errors.username?.message}
+            sx={{ mb: 2 }}
+          />
 
-          {error && (
-            <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
-              {error}
-            </Alert>
-          )}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            id="password"
+            autoComplete="current-password"
+            {...register("password")}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
+            }}
+          />
 
-          <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 1, width: "100%" }}
-            noValidate
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={isSubmitting}
+            sx={{ mt: 3, mb: 2, py: 1.5 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              autoComplete="username"
-              autoFocus
-              {...register("username")}
-              error={!!errors.username}
-              helperText={errors.username?.message}
-              sx={{ mb: 2 }}
-            />
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Password"
-              type={showPassword ? "text" : "password"}
-              id="password"
-              autoComplete="current-password"
-              {...register("password")}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-              slotProps={{
-                input: {
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword(!showPassword)}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isSubmitting}
-              sx={{ mt: 3, mb: 2, py: 1.5 }}
-            >
-              {isSubmitting ? "Signing in..." : "Sign In"}
-            </Button>
-          </Box>
-        </Paper>
-      </Box>
+            {isSubmitting ? "Signing in..." : "Sign In"}
+          </Button>
+        </Box>
+      </Paper>
     </Container>
   );
 };

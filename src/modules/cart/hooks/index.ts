@@ -44,30 +44,26 @@ export const useAddCart = (
       return response.data;
     },
     onMutate: async (newCart: AddCartRequest) => {
-      // Cancel any outgoing refetches
-      // (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({ queryKey: ["carts"] });
 
-      // Snapshot the previous value
       const prevCart = queryClient.getQueryData(["carts"]);
 
       const newCartData: Cart = {
-        ...newCart,
         id: Date.now(),
         date: new Date().toISOString(),
+        userId: newCart.userId,
+        products: newCart.products,
       };
 
-      // Optimistically update to the new value
       queryClient.setQueryData(["carts"], (old: AddCartRequest[]) => [
         newCartData,
         ...old,
       ]);
 
-      // Return a context object with the snapshotted value
+      queryClient.setQueryData(["cart", newCartData.id], newCartData);
+
       return { prevCart };
     },
-    // If the mutation fails,
-    // use the context returned from onMutate to roll back
     onError: (err, newCart, context) => {
       queryClient.setQueryData(
         ["carts"],
