@@ -34,7 +34,7 @@ export const LoginContainer = () => {
 
   const searchParams = useSearchParams();
 
-  const { mutateAsync: login } = useLogin();
+  const { mutate: login } = useLogin();
   const { showSnackbar } = useSnackbar();
 
   const {
@@ -47,9 +47,12 @@ export const LoginContainer = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      await login(data);
-      router.push(searchParams.get("redirect") || "/");
-      showSnackbar("Login successful");
+      login(data, {
+        onSuccess: () => {
+          router.push(searchParams.get("redirect") || "/");
+          showSnackbar("Login successful");
+        },
+      });
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An error occurred during login"

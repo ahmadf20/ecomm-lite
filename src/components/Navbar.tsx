@@ -13,16 +13,16 @@ export const Navbar = () => {
   const { showSnackbar } = useSnackbar();
 
   const { data: auth } = useIsAuth();
-  const { mutate: logout, isPending } = useLogout({
-    onSuccess: () => {
-      router.push("/login");
-      showSnackbar("Logout successful");
-    },
-  });
+  const { mutate: logout, isPending } = useLogout();
 
   const handleLogout = () => {
     if (isPending) return;
-    logout();
+    logout(undefined, {
+      onSuccess: () => {
+        router.push("/login");
+        showSnackbar("Logout successful");
+      },
+    });
   };
 
   return (

@@ -34,6 +34,8 @@ export const useLogin = () => {
 };
 
 export const useLogout = (options?: UseMutationOptions<void, Error, void>) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async () => {
       await apiClient.post(
@@ -43,6 +45,9 @@ export const useLogout = (options?: UseMutationOptions<void, Error, void>) => {
           baseURL: process.env.NEXT_PUBLIC_BASE_URL,
         }
       );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["auth"] });
     },
     ...options,
   });
