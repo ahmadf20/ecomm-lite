@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
 
   if (!isLogin && !isAuthenticated) {
     return NextResponse.redirect(
-      new URL("/login?redirect=" + req.url, req.url)
+      new URL("/login?redirect=" + encodeURIComponent(req.url), req.url)
     );
   }
 

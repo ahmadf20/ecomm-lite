@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# E-Commerce Lite
 
-## Getting Started
+A modern, lightweight e-commerce application built with Next.js, React, and Material-UI. This application provides a seamless shopping experience with features like product browsing, cart management, and user authentication.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Modern UI/UX** - Built with Material-UI (MUI) for a polished, responsive design
+- **Authentication** - Secure login/logout functionality
+- **Product Browsing** - View products with detailed information
+- **Shopping Cart** - Add/remove items and manage quantities
+- **Responsive Design** - Works on desktop and mobile devices
+- **Type Safety** - Built with TypeScript for better developer experience
+- **State Management** - Utilizes React Query for efficient data fetching and state management
+- **Form Handling** - Powered by React Hook Form with Zod validation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend Framework**: [Next.js 15](https://nextjs.org/)
+- **UI Library**: [Material-UI (MUI) v7](https://mui.com/)
+- **State Management**: [React Query v5](https://tanstack.com/query/latest)
+- **Form Handling**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
+- **Styling**: [Emotion](https://emotion.sh/) (CSS-in-JS)
+- **HTTP Client**: [Axios](https://axios-http.com/)
+- **Date Handling**: [Day.js](https://day.js.org/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18.0.0 or later
+- pnpm package manager
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ahmadf20/ecomm-lite.git
+   cd ecomm-lite
+   ```
 
-## Deploy on Vercel
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Run the development server:
+   ```bash
+   pnpm dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## 📦 Available Scripts
+
+- `pnpm dev` - Start the development server
+- `pnpm build` - Build the application for production
+- `pnpm start` - Start the production server
+- `pnpm lint` - Run ESLint
+
+## Screen Recording 
+
+Find the screen recording in the `recordings` folder.

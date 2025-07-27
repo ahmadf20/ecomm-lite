@@ -49,7 +49,7 @@ export const LoginContainer = () => {
     try {
       login(data, {
         onSuccess: () => {
-          router.push(searchParams.get("redirect") || "/");
+          router.push(decodeURIComponent(searchParams.get("redirect") || "/"));
           showSnackbar("Login successful");
         },
       });
